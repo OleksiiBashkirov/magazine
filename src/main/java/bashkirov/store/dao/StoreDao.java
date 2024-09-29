@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -34,7 +35,7 @@ public class StoreDao {
 
     public void save(Store store) {
         jdbcTemplate.update(
-                "insert into store(name, address, edrpou, specialnumber, description) values (?,?,?,?,?)",
+                "insert into store(name, address, edrpou, special_number, description) values (?,?,?,?,?)",
                 store.getName(),
                 store.getAddress(),
                 store.getEdrpou(),
@@ -45,7 +46,7 @@ public class StoreDao {
 
     public void update(int storeId, Store store) {
         jdbcTemplate.update(
-                "update store set name = ?, address = ?, edrpou = ?, specialnumber = ?, description = ? where id = ?",
+                "update store set name = ?, address = ?, edrpou = ?, special_number = ?, description = ? where id = ?",
                 store.getName(),
                 store.getAddress(),
                 store.getEdrpou(),
@@ -60,5 +61,21 @@ public class StoreDao {
                 "delete from store where id = ?",
                 storeId
         );
+    }
+
+    public Optional<Store> findByEdrpou(String edrpou) {
+        return jdbcTemplate.query(
+                "select * from store where edrpou = ?",
+                new Object[]{edrpou},
+                new BeanPropertyRowMapper<>(Store.class)
+        ).stream().findAny();
+    }
+
+    public Optional<Store> findBySpecialNumber(String specialNumber) {
+        return jdbcTemplate.query(
+                "select * from store where special_number = ?",
+                new Object[]{specialNumber},
+                new BeanPropertyRowMapper<>(Store.class)
+        ).stream().findAny();
     }
 }

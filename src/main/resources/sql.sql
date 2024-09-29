@@ -4,7 +4,7 @@ create table store
     name          varchar(128)                                                                        not null,
     address       varchar(128) check ( address ~ '^\d{5}, [A-Za-z]{2,25}, [A-Za-z0-9,. ''-]{2,50}$' ) not null,
     edrpou        varchar(8) check ( edrpou ~ '^\d{8}$' ) unique                                      not null,
-    specialNumber varchar(9) check ( specialNumber ~ '^[A-Z]{2}-\d{6}$' ) unique                      not null,
+    special_number varchar(9) check ( special_number ~ '^[A-Z]{2}-\d{6}$' ) unique                      not null,
     description   varchar(256)
 );
 
