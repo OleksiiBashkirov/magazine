@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stores page</title>
+</head>
+<body>
+<form th:each="store : ${storeList}">
+    <a th:href="@{/store/{id}(id=${store.getId()})}"
+       th:text="${store.getId() + '. Name=' + store.getName() + ', Address=' + store.getAddress() + ', EDRPOU=' + store.getAddress() + ', special number=' + store.getSpecialNumber() + ', description=' + store.getDescription()}"
+    >
+    </a>
+</form>
+
+
+</body>
+</html>

@@ -25,4 +25,13 @@ public class StoreController {
         return "store-new-page";
     }
 
+    @GetMapping()
+    public String getAll(
+            Model model
+    ) {
+        model.addAttribute("storeList", storeDao.getAll());
+        return "stores-page";
+    }
+
+
 }
