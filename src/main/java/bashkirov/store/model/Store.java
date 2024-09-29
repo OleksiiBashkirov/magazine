@@ -1,4 +1,4 @@
-package bashkirov.magazine.model;
+package bashkirov.store.model;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

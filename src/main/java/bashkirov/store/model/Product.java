@@ -1,4 +1,4 @@
-package bashkirov.magazine.model;
+package bashkirov.store.model;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
