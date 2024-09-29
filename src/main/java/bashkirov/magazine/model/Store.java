@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Magazine {
+public class Store {
     private int id;
 
     @NotBlank(message = "This field cannot be blank")
