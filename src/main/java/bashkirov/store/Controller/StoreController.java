@@ -37,7 +37,7 @@ public class StoreController {
         if (!productList.isEmpty()) {
             model.addAttribute("productList", productList);
         } else {
-            model.addAttribute("emptyList", productList);
+            model.addAttribute("emptyList", List.of());
         }
         model.addAttribute("storeGetById", storeDao.getById(storeId));
 

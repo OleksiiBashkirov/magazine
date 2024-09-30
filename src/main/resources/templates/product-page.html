@@ -16,6 +16,15 @@
 <p th:text="${'QUANTITY=' + productGetById.getQuantity()}"></p>
 <p th:text="${'DESCRIPTION=' + productGetById.getDescription()}"></p>
 
+<div th:if="${storePresent}">
+    <p th:text="${'Product present in the store=' + storePresent.getName() + ', address=' + storePresent.getAddress()}"></p>
+    <form th:method="PUT" th:action="@{/product/release/{id}(id=${productGetById.getId()})}">
+        <input type="submit" value="Release">
+
+    </form>
+</div>
+
+
 <form th:method="GET" th:action="@{/product/edit/{id}(id=${productGetById.getId()})}"
       style="display: inline;">
     <input type="submit" value="Edit">

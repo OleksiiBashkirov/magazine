@@ -1,7 +1,9 @@
 package bashkirov.store.Controller;
 
 import bashkirov.store.dao.ProductDao;
+import bashkirov.store.dao.StoreDao;
 import bashkirov.store.model.Product;
+import bashkirov.store.model.Store;
 import bashkirov.store.validation.ProductValidator;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,18 +18,27 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/product")
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductDao productDao;
     private final ProductValidator productValidator;
+    private final StoreDao storeDao;
 
     @GetMapping("/{id}")
     public String getById(
             @PathVariable("id") int productId,
             Model model
     ) {
+        Optional<Store> optionalStore = productDao.getStoreWhereIsProductByProductId(productId);
+        if(optionalStore.isPresent()){
+            model.addAttribute("storePresent", optionalStore.get());
+        } else {
+            model.addAttribute("allStoresList", storeDao.getAll());
+        }
         model.addAttribute("productGetById", productDao.getById(productId));
         return "product-page";
     }
@@ -90,5 +101,13 @@ public class ProductController {
     ) {
         productDao.delete(productId);
         return "redirect:/product";
+    }
+
+    @PutMapping("/release/{id}")
+    public String release(
+            @PathVariable("id") int productId
+    ) {
+        productDao.releaseProductFromStoreByProductId(productId);
+        return "redirect:/product/" + productId;
     }
 }
