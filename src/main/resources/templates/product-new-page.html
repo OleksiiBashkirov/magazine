@@ -10,27 +10,27 @@
       th:object="${newProduct}"
 >
     <label for="nameId">NAME=</label>
-    <input type="text" th:fild="*{name}" id="nameId">
+    <input type="text" th:field="*{name}" id="nameId">
     <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
     <br>
 
     <label for="articleId">ARTICLE=</label>
-    <input type="text" th:fild="*{article}" id="articleId">
+    <input type="text" th:field="*{article}" id="articleId">
     <div style="color: red" th:if="${#fields.hasErrors('article')}" th:errors="*{article}"></div>
     <br>
 
     <label for="priceId">PRICE=</label>
-    <input type="text" th:fild="*{price}" id="priceId">
+    <input type="text" th:field="*{price}" id="priceId">
     <div style="color: red" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
     <br>
 
     <label for="quantityId">QUANTITY=</label>
-    <input type="text" th:fild="*{quantity}" id="quantityId">
+    <input type="text" th:field="*{quantity}" id="quantityId">
     <div style="color: red" th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></div>
     <br>
 
     <label for="descriptionId">DESCRIPTION=</label>
-    <input type="text" th:fild="*{description}" id="descriptionId">
+    <input type="text" th:field="*{description}" id="descriptionId">
     <div style="color: red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
     <br>
 
