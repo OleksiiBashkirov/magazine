@@ -11,7 +11,7 @@
     >
     </a>
 
-    <form th:method="PUT" th:action="@{/product/edit/{id}(id=${product.getId()})}"
+    <form th:method="GET" th:action="@{/product/edit/{id}(id=${product.getId()})}"
           style="display: inline; margin-left: 10px;">
         <input type="submit" value="Edit">
     </form>
