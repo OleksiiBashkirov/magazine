@@ -15,7 +15,20 @@
 <p th:text="${'EDRPOU=' + storeGetById.getEdrpou()}"></p>
 <p th:text="${'SPECIAL NUMBER=' + storeGetById.getSpecialNumber()}"></p>
 <p th:text="${'DESCRIPTION=' + storeGetById.getDescription()}"></p>
-</body>
+
+<div th:if="${productList}">
+    <p>LIST OF PRODUCTS:</p>
+    <div th:each="product : ${productList}">
+        <a th:href="@{/product/{id} (id=${product.getId()})}"
+           th:text="${product.getId() + '. Name=' + product.getName() + ', price=' + product.getPrice() + ', article=' + product.getArticle() + ', quantity=' + product.getQuantity()}"
+        >
+        </a>
+    </div>
+</div>
+
+<div th:if="${emptyList}"
+     th:text="${'EMPTY LIST'}">
+</div>
 
 <form th:method="GET"
       th:action="@{/store/edit/{id}(id=${storeGetById.getId()})}">
@@ -26,4 +39,6 @@
       th:action="@{/store/{id} (id=${storeGetById.getId()})}">
     <input type="submit" value="Delete">
 </form>
+</body>
+
 </html>

@@ -69,4 +69,12 @@ public class ProductDao {
                 new BeanPropertyRowMapper<>(Product.class)
         ).stream().findAny();
     }
+
+    public List<Product> getAllProductsInStoreByStoreId(int storeId) {
+        return jdbcTemplate.query(
+                "select * from product where store_id = ?",
+                new Object[]{storeId},
+                new BeanPropertyRowMapper<>(Product.class)
+        );
+    }
 }

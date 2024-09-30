@@ -1,6 +1,8 @@
 package bashkirov.store.Controller;
 
+import bashkirov.store.dao.ProductDao;
 import bashkirov.store.dao.StoreDao;
+import bashkirov.store.model.Product;
 import bashkirov.store.model.Store;
 import bashkirov.store.validation.StoreValidator;
 import jakarta.validation.Valid;
@@ -16,19 +18,29 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/store")
 @RequiredArgsConstructor
 public class StoreController {
     private final StoreDao storeDao;
     private final StoreValidator storeValidator;
+    private final ProductDao productDao;
 
     @GetMapping("/{id}")
     public String getById(
             @PathVariable("id") int storeId,
             Model model
     ) {
+        List<Product> productList = productDao.getAllProductsInStoreByStoreId(storeId);
+        if (!productList.isEmpty()) {
+            model.addAttribute("productList", productList);
+        } else {
+            model.addAttribute("emptyList", productList);
+        }
         model.addAttribute("storeGetById", storeDao.getById(storeId));
+
         return "store-page";
     }
 
@@ -91,4 +103,5 @@ public class StoreController {
         storeDao.delete(storeId);
         return "redirect:/store";
     }
+
 }
