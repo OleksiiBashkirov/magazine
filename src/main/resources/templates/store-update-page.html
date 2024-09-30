@@ -5,7 +5,9 @@
     <title>Store update page</title>
 </head>
 <body>
-
+<form th:method="GET" th:action="@{/store/{id}(id=${updateStore.getId()})}">
+    <input type="submit" value="Back">
+</form>
 <form th:method="PUT"
       th:action="@{/store/{id}(id=${updateStore.getId()})}"
       th:object="${updateStore}">
