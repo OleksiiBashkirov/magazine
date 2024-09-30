@@ -5,19 +5,27 @@
     <title>Products page</title>
 </head>
 <body>
-<form th:each="product : ${productList}">
+<div th:each="product : ${productList}">
     <a th:href="@{/product/{id}(id=${product.getId()})}"
-    th:text="${product.getId() + '. Name=' + product.getName() + ', price=' + product.getPrice() + ', quantity=' + product.getQuantity() + ', article=' + product.getArticle() + ', description=' + product.getDescription()}"
+       th:text="${product.getId() + '. Name=' + product.getName() + ', price=' + product.getPrice() + ', quantity=' + product.getQuantity() + ', article=' + product.getArticle() + ', description=' + product.getDescription()}"
     >
-
     </a>
-</form>
+
+    <form th:method="PUT" th:action="@{/product/edit/{id}(id=${product.getId()})}"
+          style="display: inline; margin-left: 10px;">
+        <input type="submit" value="Edit">
+    </form>
+
+    <form th:method="DELETE" th:action="@{/product/{id}(id=${product.getId()})}"
+          style="display: inline;margin-left: 10px;">
+        <input type="submit" value="Delete">
+    </form>
+</div>
 
 <form th:method="GET"
-th:action="@{/product/new}">
+      th:action="@{/product/new}">
     <input type="submit" value="Add new Product">
 </form>
-
 
 
 </body>
