@@ -93,4 +93,12 @@ public class ProductDao {
                 productId
         );
     }
+
+    public void assignStoreForProduct(int productId, int storeId) {
+        jdbcTemplate.update(
+                "update product set store_id = ? where id = ?",
+                storeId,
+                productId
+        );
+    }
 }

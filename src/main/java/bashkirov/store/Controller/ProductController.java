@@ -31,14 +31,16 @@ public class ProductController {
     @GetMapping("/{id}")
     public String getById(
             @PathVariable("id") int productId,
-            Model model
+            Model model,
+            @ModelAttribute("productOwner") Store productOwner
     ) {
         Optional<Store> optionalStore = productDao.getStoreWhereIsProductByProductId(productId);
-        if(optionalStore.isPresent()){
-            model.addAttribute("storePresent", optionalStore.get());
+        if (optionalStore.isPresent()) {
+            model.addAttribute("productStoreOwner", optionalStore.get());
         } else {
-            model.addAttribute("allStoresList", storeDao.getAll());
+            model.addAttribute("storeList", storeDao.getAll());
         }
+
         model.addAttribute("productGetById", productDao.getById(productId));
         return "product-page";
     }
@@ -108,6 +110,15 @@ public class ProductController {
             @PathVariable("id") int productId
     ) {
         productDao.releaseProductFromStoreByProductId(productId);
+        return "redirect:/product/" + productId;
+    }
+
+    @PutMapping("/assign/{id}")
+    public String assign(
+            @PathVariable("id") int productId,
+            @ModelAttribute("productOwner") Store storeWhereAssignProduct
+    ) {
+        productDao.assignStoreForProduct(productId, storeWhereAssignProduct.getId());
         return "redirect:/product/" + productId;
     }
 }

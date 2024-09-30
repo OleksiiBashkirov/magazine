@@ -16,13 +16,32 @@
 <p th:text="${'QUANTITY=' + productGetById.getQuantity()}"></p>
 <p th:text="${'DESCRIPTION=' + productGetById.getDescription()}"></p>
 
-<div th:if="${storePresent}">
-    <p th:text="${'Product present in the store=' + storePresent.getName() + ', address=' + storePresent.getAddress()}"></p>
+<div th:if="${productStoreOwner}">
+    <p th:text="${'Product present in the store=' + productStoreOwner.getName() + ', address=' + productStoreOwner.getAddress()}"></p>
     <form th:method="PUT" th:action="@{/product/release/{id}(id=${productGetById.getId()})}">
         <input type="submit" value="Release">
+    </form>
+</div>
+
+<div th:if="${storeList}">
+    <p>This product is not present in any store yet</p>
+    <form th:method="PUT"
+          th:action="@{/product/assign/{id}(id=${productOwner.getId()})}">
+        <label for="storeSelectId">SELECT STORE:</label>
+        <select th:object="${productOwner}"
+                th:field="*{id}"
+                id="storeSelectId">
+            <option th:each="store : ${storeList}"
+                    th:value="${store.getId()}"
+                    th:text="${store.getName() + ', address=' + store.getAddress() + 'edrpou=' + store.getEdrpou()}"
+            ></option>
+        </select>
+        <input type="submit" value="Assign">
 
     </form>
 </div>
+
+
 
 
 <form th:method="GET" th:action="@{/product/edit/{id}(id=${productGetById.getId()})}"
