@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Products page</title>
+</head>
+<body>
+<form th:each="product : ${productList}">
+    <a th:href="@{/product/{id}(id=${product.getId()})}"
+    th:text="${product.getId() + '. Name=' + product.getName() + ', price=' + product.getPrice() + ', quantity=' + product.getQuantity() + ', article=' + product.getArticle() + ', description=' + product.getDescription()}"
+    >
+
+    </a>
+</form>
+
+
+
+</body>
+</html>

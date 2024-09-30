@@ -23,4 +23,12 @@ public class ProductController {
         return "product-page";
     }
 
+    @GetMapping
+    public String getAll(
+            Model model
+    ) {
+        model.addAttribute("productList", productDao.getAll());
+        return "products-page";
+    }
+
 }
