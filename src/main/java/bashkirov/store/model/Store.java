@@ -18,7 +18,7 @@ public class Store {
     private String name;
 
     @NotBlank(message = "This field cannot be blank")
-    @Size(min = 5, max = 128, message = "This field cannot be less 1 and more 128 characters")
+    @Size(min = 5, max = 128, message = "This field cannot be less 5 and more 128 characters")
     @Pattern(regexp = "^\\d{5}, [A-Za-z]{2,25}, [A-Za-z0-9,. '-]{2,50}$", message = "Should be in format `01023, Ukraine, Kyiv, vul. Ivanova, 128-e`")
     private String address;
 

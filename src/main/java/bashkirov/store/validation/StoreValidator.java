@@ -23,11 +23,6 @@ public class StoreValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         Store store = (Store) target;
-        findByEdrpou(errors, store);
-        findBySpecialNumber(errors, store);
-    }
-
-    private void findByEdrpou(Errors errors, Store store) {
         Optional<Store> optionalStore = storeDao.findByEdrpou(store.getEdrpou());
         if (optionalStore.isPresent()) {
             Store existedStore = optionalStore.get();
@@ -39,10 +34,7 @@ public class StoreValidator implements Validator {
                 );
             }
         }
-    }
-
-    private void findBySpecialNumber(Errors errors, Store store) {
-        Optional<Store> optionalStore = storeDao.findBySpecialNumber(store.getSpecialNumber());
+        optionalStore = storeDao.findBySpecialNumber(store.getSpecialNumber());
         if (optionalStore.isPresent()) {
             Store existedStore = optionalStore.get();
             if (store.getId() == 0 || store.getId() != existedStore.getId()) {
