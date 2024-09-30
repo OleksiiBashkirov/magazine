@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -57,6 +58,29 @@ public class ProductController {
         }
         productDao.save(newProduct);
         return "redirect:/product";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String productUpdatePage(
+            @PathVariable("id") int productId,
+            Model model
+    ) {
+        model.addAttribute("productUpdate", productDao.getById(productId));
+        return "product-update-page";
+    }
+
+    @PutMapping("/{id}")
+    public String update(
+            @PathVariable("id") int productId,
+            @Valid @ModelAttribute("productUpdate") Product productUpdate,
+            BindingResult bindingResult
+    ) {
+        productValidator.validate(productUpdate, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "product-update-page";
+        }
+        productDao.update(productId, productUpdate);
+        return "redirect:/product/" + productId;
     }
 
 }
