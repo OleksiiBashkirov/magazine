@@ -11,5 +11,10 @@
 <p th:text="${'PRICE=' + productGetById.getPrice()}"></p>
 <p th:text="${'QUANTITY=' + productGetById.getQuantity()}"></p>
 <p th:text="${'DESCRIPTION=' + productGetById.getDescription()}"></p>
+
+<form th:method="GET" th:action="@{/product/edit/{id}(id=${productGetById.getId()})}">
+    <input type="submit" value="Edit">
+</form>
 </body>
+
 </html>
