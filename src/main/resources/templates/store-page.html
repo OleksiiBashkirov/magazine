@@ -17,4 +17,9 @@
       th:action="@{/store/edit/{id}(id=${storeGetById.getId()})}">
     <input type="submit" value="Edit">
 </form>
+
+<form th:method="DELETE"
+      th:action="@{/store/{id} (id=${storeGetById.getId()})}">
+    <input type="submit" value="Delete">
+</form>
 </html>
