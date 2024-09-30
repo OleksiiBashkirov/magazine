@@ -15,6 +15,10 @@
 <form th:method="GET" th:action="@{/product/edit/{id}(id=${productGetById.getId()})}">
     <input type="submit" value="Edit">
 </form>
+
+<form th:method="DELETE" th:action="@{/product/{id}(id=${productGetById.getId()})}">
+    <input type="submit" value="Delete">
+</form>
 </body>
 
 </html>
