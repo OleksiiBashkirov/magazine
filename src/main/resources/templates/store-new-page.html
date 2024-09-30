@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Store new page</title>
+</head>
+<body>
+<form th:method="POST"
+      th:action="@{/store}"
+      th:object="${newStore}">
+    <label for="nameId">NAME=</label>
+    <input type="text" th:field="*{name}" id=nameId>
+    <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+    <br>
+
+    <label for="addressId">ADDRESS=</label>
+    <input type="text" th:field="*{address}" id="addressId">
+    <div style="color: red" th:if="${#fields.hasErrors('address')}" th:error="*{address}"></div>
+    <br>
+
+    <label for="edrpouId">EDRPOU=</label>
+    <input type="text" th:field="*{edrpou}" id="edrpouId">
+    <div style="color: red" th:if="${#fields.hasErrors('edrpou')}" th:errors="*{edrpou}"></div>
+    <br>
+
+    <label for="specialNumberId">SPECIAL NUMBER=</label>
+    <input type="text" th:field="*{specialNumber}" id="specialNumberId">
+    <div style="color: red" th:if="${#fields.hasErrors('specialNumber')}" th:errors="*{specialNumber}"></div>
+    <br>
+
+    <label for="descriptionId">DESCRIPTION</label>
+    <input type="text" th:field="*{description}" id="descriptionId">
+    <div style="color: red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+    <br>
+
+    <input type="submit" value="Save">
+</form>
+
+
+
+
+
+</body>
+</html>
