@@ -20,7 +20,7 @@ public class Product {
     private String name;
 
     @NotBlank(message = "Cannot be empty")
-    @Size(min = 9, max = 9, message = "Must be exactly 9 symbols")
+    @Size(min = 9, max = 13, message = "Must be from 9 to 13 symbols")
     @Pattern(regexp = "^\\d{4}-\\d{4}(-\\d{1,3})?$", message = "Must be like `1234-1234` and optional `-123`")
     private String article;
 
