@@ -78,4 +78,19 @@ public class StoreDao {
                 new BeanPropertyRowMapper<>(Store.class)
         ).stream().findAny();
     }
+
+    public void releaseProductFromStore(int productId) {
+        jdbcTemplate.update(
+                "update product set store_id = null where id = ?",
+                productId
+        );
+    }
+
+    public void assignProductToStoreByProductId(int storeId, int productId) {
+        jdbcTemplate.update(
+                "update product set store_id = ? where id = ?",
+                storeId,
+                productId
+        );
+    }
 }
