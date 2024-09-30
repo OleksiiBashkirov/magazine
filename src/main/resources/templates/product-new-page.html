@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product new page</title>
+</head>
+<body>
+<form th:method="POST"
+      th:action="@{/product}"
+      th:object="${newProduct}"
+>
+    <label for="nameId">NAME=</label>
+    <input type="text" th:fild="*{name}" id="nameId">
+    <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+    <br>
+
+    <label for="articleId">ARTICLE=</label>
+    <input type="text" th:fild="*{article}" id="articleId">
+    <div style="color: red" th:if="${#fields.hasErrors('article')}" th:errors="*{article}"></div>
+    <br>
+
+    <label for="priceId">PRICE=</label>
+    <input type="text" th:fild="*{price}" id="priceId">
+    <div style="color: red" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
+    <br>
+
+    <label for="quantityId">QUANTITY=</label>
+    <input type="text" th:fild="*{quantity}" id="quantityId">
+    <div style="color: red" th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></div>
+    <br>
+
+    <label for="descriptionId">DESCRIPTION=</label>
+    <input type="text" th:fild="*{description}" id="descriptionId">
+    <div style="color: red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+    <br>
+
+    <input type="submit" value="Save">
+</form>
+
+
+</body>
+</html>
