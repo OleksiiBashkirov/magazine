@@ -12,4 +12,9 @@
 <p th:text="${'SPECIAL NUMBER=' + storeGetById.getSpecialNumber()}"></p>
 <p th:text="${'DESCRIPTION=' + storeGetById.getDescription()}"></p>
 </body>
+
+<form th:method="GET"
+      th:action="@{/store/edit/{id}(id=${storeGetById.getId()})}">
+    <input type="submit" value="Edit">
+</form>
 </html>
