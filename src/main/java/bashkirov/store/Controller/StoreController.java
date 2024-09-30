@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -58,5 +59,28 @@ public class StoreController {
         return "redirect:/store";
     }
 
+
+    @GetMapping("/edit/{id}")
+    public String updateStorePage(
+            @PathVariable("id") int storeId,
+            Model model
+    ) {
+        model.addAttribute("updateStore", storeDao.getById(storeId));
+        return "store-update-page";
+    }
+
+    @PutMapping("/{id}")
+    public String update(
+            @PathVariable("id") int storeId,
+            @Valid @ModelAttribute("updateStore") Store updateStore,
+            BindingResult bindingResult
+    ) {
+        storeValidator.validate(updateStore, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "store-update-page";
+        }
+        storeDao.update(storeId, updateStore);
+        return "redirect:/store/" + storeId;
+    }
 
 }
