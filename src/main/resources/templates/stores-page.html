@@ -12,18 +12,20 @@
     </a>
 
     <form th:method="GET"
-          th:action="@{/store/edit/{id}(id=${store.getId()})}">
+          th:action="@{/store/edit/{id}(id=${store.getId()})}"
+          style="display: inline; margin-left: 10px;">
         <input type="submit" value="Edit">
     </form>
 
     <form th:method="DELETE"
-    th:action="@{/store/{id}(id=${store.getId()})}">
+          th:action="@{/store/{id}(id=${store.getId()})}"
+          style="display: inline;">
         <input type="submit" value="Delete">
     </form>
 </div>
 
 <form th:method="GET"
-th:action="@{/store/new}">
+      th:action="@{/store/new}">
     <input type="submit" value="Add new Store">
 </form>
 
