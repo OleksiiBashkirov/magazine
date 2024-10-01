@@ -111,4 +111,14 @@ public class ProductDao {
         );
         return (count != null) ? count : 0;
     }
+
+    public List<Product> searchByNameOrArticle(String query) {
+        String sql = "select * from product where name ILIKE ? OR article ILIKE ?";
+        String likeQuery = "%" + query + "%";
+        return jdbcTemplate.query(
+                sql,
+                new Object[]{likeQuery, likeQuery},
+                new BeanPropertyRowMapper<>(Product.class)
+        );
+    }
 }

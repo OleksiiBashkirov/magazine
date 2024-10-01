@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -130,5 +131,19 @@ public class ProductController {
     ) {
         productDao.assignStoreForProduct(productId, storeWhereAssignProduct.getId());
         return "redirect:/product/" + productId;
+    }
+
+    @GetMapping("/search")
+    public String searchProduct(
+            @RequestParam("query") String query,
+            Model model
+    ) {
+        List<Product> productListSearch = productDao.searchByNameOrArticle(query);
+        if (!productListSearch.isEmpty()) {
+            model.addAttribute("productSearchList", productListSearch);
+        } else {
+            model.addAttribute("emptySearchList", List.of());
+        }
+        return "product-search-page";
     }
 }

@@ -34,6 +34,16 @@
     <input type="submit" value="Add new Product">
 </form>
 
+<form th:method="GET"
+      th:action="@{/product/search}"
+>
+    <input type="submit" value="Search">
+    <label>
+        <input type="text" name="query" placeholder="Enter product name or article for search">
+    </label>
+
+</form>
+
 <ul>
     <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}" style="display: inline; margin-left: 10px;">
         <a th:href="@{'/product?page=' + ${i} + '&size=' + 10}"

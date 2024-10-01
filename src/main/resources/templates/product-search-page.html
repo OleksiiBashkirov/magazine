@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product search page</title>
+</head>
+<body>
+<div th:if="${productSearchList}">
+    <p>SEARCH RESULT</p>
+    <div th:each="productS : ${productSearchList}">
+        <a th:href="@{/product/{id}(id=${productS.getId()})}"
+           th:text="${productS.getId() + ' ' + productS.getName() + ' ' + productS.getPrice() + ' ' + productS.getArticle()}"
+        ></a>
+
+    </div>
+</div>
+
+<div th:if="${emptySearchList}">
+    <p>NO RESULT</p>
+</div>
+
+<form th:method="GET" th:action="@{/product}">
+    <input type="submit" value="Back">
+</form>
+
+
+</body>
+</html>

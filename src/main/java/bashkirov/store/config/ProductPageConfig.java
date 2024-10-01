@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 @ConfigurationProperties(prefix = "product.page")
-@Getter
-@Setter
 public class ProductPageConfig {
+    @Getter
+    @Setter
     private int size;
 }
