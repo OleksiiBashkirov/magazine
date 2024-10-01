@@ -1,11 +1,11 @@
 package bashkirov.store.Controller;
 
-import bashkirov.store.dao.ProductDao;
 import bashkirov.store.dao.StoreDao;
 import bashkirov.store.model.Product;
 import bashkirov.store.model.Store;
 import bashkirov.store.validation.StoreValidator;
 import jakarta.validation.Valid;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,23 +19,20 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("/store")
 @RequiredArgsConstructor
 public class StoreController {
     private final StoreDao storeDao;
     private final StoreValidator storeValidator;
-    private final ProductDao productDao;
 
     @GetMapping("/{id}")
     public String getById(
             @PathVariable("id") int storeId,
             Model model
     ) {
-        List<Product> productList = productDao.getAllProductsInStore(storeId);
-        List<Product> availableProductList = productDao.getAllProductsNotInStore();
+        List<Product> productList = storeDao.getAllProductsInStore(storeId);
+        List<Product> availableProductList = storeDao.getAllAvailableProducts();
 
         if (!productList.isEmpty()) {
             model.addAttribute("productList", productList);
@@ -121,13 +118,12 @@ public class StoreController {
         return "redirect:/store/" + storeId;
     }
 
-    @PutMapping("/{storeId}/product/assign")
+    @PutMapping("/product/assign")
     public String assignProductToStore(
-            @PathVariable("storeId") int storeId,
+            @RequestParam("storeId") int storeId,
             @RequestParam("productId") int productId
     ) {
         storeDao.assignProductToStore(storeId, productId);
         return "redirect:/store/" + storeId;
     }
-
 }
