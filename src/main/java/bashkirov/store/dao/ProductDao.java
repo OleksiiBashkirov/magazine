@@ -2,14 +2,13 @@ package bashkirov.store.dao;
 
 import bashkirov.store.model.Product;
 import bashkirov.store.model.Store;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -71,7 +70,7 @@ public class ProductDao {
         ).stream().findAny();
     }
 
-    public List<Product> getAllProductsInStoreByStoreId(int storeId) {
+    public List<Product> getAllProductsInStore(int storeId) {
         return jdbcTemplate.query(
                 "select * from product where store_id = ?",
                 new Object[]{storeId},
@@ -79,7 +78,13 @@ public class ProductDao {
         );
     }
 
-    public Optional<Store> getStoreWhereIsProductByProductId(int productId) {
+    public List<Product> getAllProductsNotInStore() {
+        return jdbcTemplate.query(
+                "select * from product where store_id IS NULL",
+                new BeanPropertyRowMapper<>(Product.class));
+    }
+
+    public Optional<Store> getStoreWhereIsProduct(int productId) {
         return jdbcTemplate.query(
                 "select s.* from store s join product p on s.id = p.store_id where p.id = ?",
                 new Object[]{productId},
@@ -87,7 +92,7 @@ public class ProductDao {
         ).stream().findAny();
     }
 
-    public void releaseProductFromStoreByProductId(int productId) {
+    public void releaseProductFromStore(int productId) {
         jdbcTemplate.update(
                 "update product set store_id = null where id = ?",
                 productId

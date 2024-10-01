@@ -34,7 +34,7 @@ public class ProductController {
             Model model,
             @ModelAttribute("productOwner") Store productOwner
     ) {
-        Optional<Store> optionalStore = productDao.getStoreWhereIsProductByProductId(productId);
+        Optional<Store> optionalStore = productDao.getStoreWhereIsProduct(productId);
         if (optionalStore.isPresent()) {
             model.addAttribute("productStoreOwner", optionalStore.get());
         } else {
@@ -109,7 +109,7 @@ public class ProductController {
     public String release(
             @PathVariable("id") int productId
     ) {
-        productDao.releaseProductFromStoreByProductId(productId);
+        productDao.releaseProductFromStore(productId);
         return "redirect:/product/" + productId;
     }
 
