@@ -111,4 +111,14 @@ public class StoreDao {
                 productId
         );
     }
+
+    public List<Store> searchByNameOrEdrpouOrSpecialNumber(String query) {
+        String sql = "select * from store where name ILIKE ? OR edrpou ILIKE ? OR special_number ILIKE ?";
+        String likeQuery = "%" + query + "%";
+        return jdbcTemplate.query(
+                sql,
+                new Object[]{likeQuery, likeQuery, likeQuery},
+                new BeanPropertyRowMapper<>(Store.class)
+        );
+    }
 }

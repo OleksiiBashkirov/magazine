@@ -11,7 +11,6 @@
         <a th:href="@{/product/{id}(id=${productS.getId()})}"
            th:text="${productS.getId() + ' ' + productS.getName() + ' ' + productS.getPrice() + ' ' + productS.getArticle()}"
         ></a>
-
     </div>
 </div>
 
@@ -22,7 +21,5 @@
 <form th:method="GET" th:action="@{/product}">
     <input type="submit" value="Back">
 </form>
-
-
 </body>
 </html>

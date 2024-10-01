@@ -29,6 +29,13 @@
     <input type="submit" value="Add new Store">
 </form>
 
-
+<form th:method="GET"
+      th:action="@{/store/search}"
+>
+    <input type="submit" value="Search">
+    <label>
+        <input type="text" name="query" placeholder="Enter store parameter for search">
+    </label>
+</form>
 </body>
 </html>

@@ -126,4 +126,19 @@ public class StoreController {
         storeDao.assignProductToStore(storeId, productId);
         return "redirect:/store/" + storeId;
     }
+
+    @GetMapping("/search")
+    public String searchStore(
+            @RequestParam("query") String query,
+            Model model
+    ) {
+        List<Store> storeSearchList = storeDao.searchByNameOrEdrpouOrSpecialNumber(query);
+        if (!storeSearchList.isEmpty()) {
+            model.addAttribute("storeSearchList", storeSearchList);
+        } else {
+            model.addAttribute("emptyList", List.of());
+        }
+
+        return "store-search-page";
+    }
 }
