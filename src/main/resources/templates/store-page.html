@@ -23,11 +23,35 @@
            th:text="${product.getId() + '. Name=' + product.getName() + ', price=' + product.getPrice() + ', article=' + product.getArticle() + ', quantity=' + product.getQuantity()}"
         >
         </a>
+        <!-- Кнопка для release продукту -->
+        <form th:method="PUT"
+              th:action="@{/store/release/{id}(id=${product.getId()})}">
+            <input type="hidden" name="_method" value="PUT"/>
+            <input type="submit" value="Release">
+        </form>
     </div>
 </div>
 
-<div th:if="${emptyList}"
-     th:text="${'EMPTY LIST'}">
+<div th:if="${emptyList}">
+    <p>EMPTY LIST</p>
+</div>
+
+<!-- Форма для assign продукту до магазину -->
+<div th:if="${availableProductList}">
+    <p>ASSIGN PRODUCT TO THIS STORE:</p>
+    <form th:method="POST" th:action="@{/{storeId}/product/assign storeId=${storeGetById.getId()}}">
+        <label for="productSelectId">SELECT PRODUCT</label>
+        <select th:object="${storeGetById}"
+                th:field="*{id}"
+                id="productSelectId">
+            <option th:each="product : ${availableProductList}"
+                    th:value="${product.getId()}"
+                    th:text="${'name=' + product.getName() +',price=' + product.getPrice() + ',article='+ product.getArticle() + ',quantity=' + product.getQuantity()}">
+            </option>
+        </select>
+        <input type="hidden" name="_method" value="PUT"/>
+        <input type="submit" value="Assign">
+    </form>
 </div>
 
 <form th:method="GET"

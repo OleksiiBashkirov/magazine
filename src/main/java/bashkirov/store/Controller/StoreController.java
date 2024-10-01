@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -33,12 +34,19 @@ public class StoreController {
             @PathVariable("id") int storeId,
             Model model
     ) {
-        List<Product> productList = productDao.getAllProductsInStoreByStoreId(storeId);
+        List<Product> productList = productDao.getAllProductsInStore(storeId);
+        List<Product> availableProductList = productDao.getAllProductsNotInStore();
+
         if (!productList.isEmpty()) {
             model.addAttribute("productList", productList);
         } else {
             model.addAttribute("emptyList", List.of());
         }
+
+        if (!availableProductList.isEmpty()) {
+            model.addAttribute("availableProductList", availableProductList);
+        }
+
         model.addAttribute("storeGetById", storeDao.getById(storeId));
 
         return "store-page";
@@ -102,6 +110,24 @@ public class StoreController {
     ) {
         storeDao.delete(storeId);
         return "redirect:/store";
+    }
+
+    @PutMapping("/{storeId}/product/release/{productId}")
+    public String releaseProduct(
+            @PathVariable("storeId") int storeId,
+            @PathVariable("productId") int productId
+    ) {
+        storeDao.releaseProductFromStore(productId);
+        return "redirect:/store/" + storeId;
+    }
+
+    @PutMapping("/{storeId}/product/assign")
+    public String assignProductToStore(
+            @PathVariable("storeId") int storeId,
+            @RequestParam("productId") int productId
+    ) {
+        storeDao.assignProductToStore(storeId, productId);
+        return "redirect:/store/" + storeId;
     }
 
 }
