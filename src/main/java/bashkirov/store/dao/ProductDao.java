@@ -98,7 +98,7 @@ public class ProductDao {
 
     public List<Product> getProductsPaginated(int page, int size) {
         return jdbcTemplate.query(
-                "select * from product order by name LIMIT ? OFFSET ?",
+                "select * from product order by id LIMIT ? OFFSET ?",
                 new Object[]{size, (page * size)},
                 new BeanPropertyRowMapper<>(Product.class)
         );

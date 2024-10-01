@@ -1,5 +1,6 @@
 package bashkirov.store.Controller;
 
+import bashkirov.store.config.ProductPageConfig;
 import bashkirov.store.dao.ProductDao;
 import bashkirov.store.dao.StoreDao;
 import bashkirov.store.model.Product;
@@ -28,6 +29,7 @@ public class ProductController {
     private final ProductDao productDao;
     private final ProductValidator productValidator;
     private final StoreDao storeDao;
+    private final ProductPageConfig productPageConfig;
 
     @GetMapping("/{id}")
     public String getById(
@@ -49,10 +51,11 @@ public class ProductController {
     @GetMapping
     public String getAll(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
+//            @RequestParam(defaultValue = "10") int size,
             Model model
     ) {
         int totalProducts = productDao.countProducts();
+        int size = productPageConfig.getSize();
         int totalPages = (int) Math.ceil((double) totalProducts / size);
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("currentPage", page);
