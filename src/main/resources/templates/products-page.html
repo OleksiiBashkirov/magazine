@@ -3,6 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Products page</title>
+    <style>
+        .active {
+            font-weight: bold;
+            text-decoration: underline;
+            color: red;
+        }
+    </style>
 </head>
 <body>
 <div th:each="product : ${productList}">
@@ -27,6 +34,13 @@
     <input type="submit" value="Add new Product">
 </form>
 
-
+<ul>
+    <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}" style="display: inline; margin-left: 10px;">
+        <a th:href="@{'/product?page=' + ${i} + '&size=' + 10}"
+           th:classappend="${i == currentPage} ? 'active' : ''">
+            <span th:text="${i + 1}">Page</span>
+        </a>
+    </li>
+</ul>
 </body>
 </html>

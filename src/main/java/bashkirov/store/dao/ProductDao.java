@@ -2,13 +2,15 @@ package bashkirov.store.dao;
 
 import bashkirov.store.model.Product;
 import bashkirov.store.model.Store;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -32,6 +34,7 @@ public class ProductDao {
         );
     }
 
+    @Transactional
     public void save(Product product) {
         jdbcTemplate.update(
                 "insert into product(name, article, price, quantity, description) values (?,?,?,?,?)",
@@ -91,5 +94,21 @@ public class ProductDao {
                 storeId,
                 productId
         );
+    }
+
+    public List<Product> getProductsPaginated(int page, int size) {
+        return jdbcTemplate.query(
+                "select * from product order by name LIMIT ? OFFSET ?",
+                new Object[]{size, (page * size)},
+                new BeanPropertyRowMapper<>(Product.class)
+        );
+    }
+
+    public int countProducts() {
+        Integer count = jdbcTemplate.queryForObject(
+                "select count(*) from product",
+                Integer.class
+        );
+        return (count != null) ? count : 0;
     }
 }

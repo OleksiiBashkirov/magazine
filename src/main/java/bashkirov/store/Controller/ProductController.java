@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Optional;
 
@@ -47,9 +48,15 @@ public class ProductController {
 
     @GetMapping
     public String getAll(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
             Model model
     ) {
-        model.addAttribute("productList", productDao.getAll());
+        int totalProducts = productDao.countProducts();
+        int totalPages = (int) Math.ceil((double) totalProducts / size);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("productList", productDao.getProductsPaginated(page, size));
         return "products-page";
     }
 
