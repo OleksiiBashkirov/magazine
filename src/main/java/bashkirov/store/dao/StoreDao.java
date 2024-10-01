@@ -86,7 +86,7 @@ public class StoreDao {
         );
     }
 
-    public void assignProductToStoreByProductId(int storeId, int productId) {
+    public void assignProductToStore(int storeId, int productId) {
         jdbcTemplate.update(
                 "update product set store_id = ? where id = ?",
                 storeId,
