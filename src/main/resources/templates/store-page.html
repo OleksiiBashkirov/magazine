@@ -25,7 +25,8 @@
         </a>
         <!-- Кнопка для release продукту -->
         <form th:method="PUT"
-              th:action="@{/store/{storeId}/product/release/{productId}(storeId=${storeGetById.getId()}, productId=${product.getId()})}">
+              th:action="@{/store/product/release/{productId}(productId=${product.getId()})}">
+            <input type="hidden" name = "storeId" th:value="${storeGetById.getId()}">
             <input type="hidden" name="_method" value="PUT"/>
             <input type="submit" value="Release">
         </form>
@@ -40,9 +41,7 @@
 <div th:if="${availableProductList}">
     <p>ASSIGN PRODUCT TO THIS STORE:</p>
     <form th:method="POST" th:action="@{/store/product/assign}">
-        <input type="hidden"
-               name = "storeId"
-               th:value="${storeGetById.getId()}">
+        <input type="hidden" name = "storeId" th:value="${storeGetById.getId()}">
         <label for="productSelectId">SELECT PRODUCT</label>
         <select id="productSelectId" name="productId">
             <option th:each="product : ${availableProductList}"

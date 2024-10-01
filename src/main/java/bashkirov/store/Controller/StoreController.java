@@ -109,9 +109,9 @@ public class StoreController {
         return "redirect:/store";
     }
 
-    @PutMapping("/{storeId}/product/release/{productId}")
+    @PutMapping("/product/release/{productId}")
     public String releaseProduct(
-            @PathVariable("storeId") int storeId,
+            @RequestParam("storeId") int storeId,
             @PathVariable("productId") int productId
     ) {
         storeDao.releaseProductFromStore(productId);
