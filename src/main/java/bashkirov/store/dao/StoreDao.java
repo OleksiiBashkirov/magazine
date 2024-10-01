@@ -1,5 +1,6 @@
 package bashkirov.store.dao;
 
+import bashkirov.store.model.Product;
 import bashkirov.store.model.Store;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -78,6 +79,23 @@ public class StoreDao {
                 new BeanPropertyRowMapper<>(Store.class)
         ).stream().findAny();
     }
+
+    //*********************************************************************************************************
+    public List<Product> getAllProductsInStore(int storeId) {
+        return jdbcTemplate.query(
+                "select * from product where store_id = ?",
+                new Object[]{storeId},
+                new BeanPropertyRowMapper<>(Product.class)
+        );
+    }
+
+    public List<Product> getAllAvailableProducts() {
+        return jdbcTemplate.query(
+                "select * from product where store_id IS NULL",
+                new BeanPropertyRowMapper<>(Product.class));
+    }
+//*********************************************************************************************************
+
 
     public void releaseProductFromStore(int productId) {
         jdbcTemplate.update(

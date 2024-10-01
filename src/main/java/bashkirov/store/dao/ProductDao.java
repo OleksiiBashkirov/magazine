@@ -70,20 +70,6 @@ public class ProductDao {
         ).stream().findAny();
     }
 
-    public List<Product> getAllProductsInStore(int storeId) {
-        return jdbcTemplate.query(
-                "select * from product where store_id = ?",
-                new Object[]{storeId},
-                new BeanPropertyRowMapper<>(Product.class)
-        );
-    }
-
-    public List<Product> getAllProductsNotInStore() {
-        return jdbcTemplate.query(
-                "select * from product where store_id IS NULL",
-                new BeanPropertyRowMapper<>(Product.class));
-    }
-
     public Optional<Store> getStoreWhereIsProduct(int productId) {
         return jdbcTemplate.query(
                 "select s.* from store s join product p on s.id = p.store_id where p.id = ?",
