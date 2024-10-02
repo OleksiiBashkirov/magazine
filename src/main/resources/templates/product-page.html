@@ -53,6 +53,12 @@
     <input type="submit" value="Delete">
 </form>
 
+<form th:method="PUT" th:action="@{/product/{id}/discount (id=${productGetById.getId()})}">
+    <label for="discountId">DISCOUNT PERCENTAGE:</label>
+    <input type="number" name="discountPercentage" id="discountId" step="0.01" min="0" max="100" required>
+    <input type="submit" value="Apply DISCOUNT">
+</form>
+
 </body>
 
 </html>

@@ -159,12 +159,24 @@ public class ProductController {
     ) {
         List<Product> productFilterList =
                 productDao.filterProducts(minPrice, maxPrice, minQuantity, maxQuantity, name, article);
-        if(!productFilterList.isEmpty()) {
+        if (!productFilterList.isEmpty()) {
             model.addAttribute("productFilterList", productFilterList);
         } else {
             model.addAttribute("emptyList", List.of());
         }
         return "product-filter-page";
-
     }
+
+    @PutMapping("/{id}/discount")
+    public String discountProduct(
+            @PathVariable("id") int productId,
+            @RequestParam("discountPercentage") Double discountPercentage
+    ) {
+        productDao.applyDiscount(productId, discountPercentage);
+        return "redirect:/product/" + productId;
+    }
+
+
+
+
 }

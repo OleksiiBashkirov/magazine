@@ -169,4 +169,13 @@ public class ProductDao {
                 new BeanPropertyRowMapper<>(Product.class)
         );
     }
+
+    public void applyDiscount(int productId, double discountPercentage) {
+        jdbcTemplate.update(
+                "update product set price = (price - price * ? / 100) where id = ?",
+                discountPercentage,
+                productId
+        );
+    }
+
 }
