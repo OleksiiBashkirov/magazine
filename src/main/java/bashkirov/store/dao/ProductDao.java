@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -118,6 +119,53 @@ public class ProductDao {
         return jdbcTemplate.query(
                 sql,
                 new Object[]{likeQuery, likeQuery},
+                new BeanPropertyRowMapper<>(Product.class)
+        );
+    }
+
+    public List<Product> filterProducts(
+            Double minPrice,
+            Double maxPrice,
+            Integer minQuantity,
+            Integer maxQuantity,
+            String name,
+            String article
+    ) {
+        StringBuilder sql = new StringBuilder("select * from product where 1 = 1");
+        List<Object> params = new ArrayList<>();
+
+        if (minPrice != null) {
+            sql.append(" AND price >= ?");
+            params.add(minPrice);
+        }
+
+        if (maxPrice != null) {
+            sql.append(" AND price <= ?");
+            params.add(maxPrice);
+        }
+
+        if (minQuantity != null) {
+            sql.append(" AND quantity >= ?");
+            params.add(minQuantity);
+        }
+
+        if (maxQuantity != null) {
+            sql.append(" AND quantity <= ?");
+            params.add(maxQuantity);
+        }
+
+        if (name != null && !name.isEmpty()) {
+            sql.append(" AND name ILIKE ?");
+            params.add("%" + name + "%");
+        }
+
+        if (article != null && !article.isEmpty()) {
+            sql.append(" AND article ILIKE ?");
+            params.add("%" + article + "%");
+        }
+        return jdbcTemplate.query(
+                sql.toString(),
+                params.toArray(),
                 new BeanPropertyRowMapper<>(Product.class)
         );
     }

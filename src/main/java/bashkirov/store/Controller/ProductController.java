@@ -146,4 +146,25 @@ public class ProductController {
         }
         return "product-search-page";
     }
+
+    @GetMapping("/filter")
+    public String filterProduct(
+            @RequestParam(required = false) Double minPrice,
+            @RequestParam(required = false) Double maxPrice,
+            @RequestParam(required = false) Integer minQuantity,
+            @RequestParam(required = false) Integer maxQuantity,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String article,
+            Model model
+    ) {
+        List<Product> productFilterList =
+                productDao.filterProducts(minPrice, maxPrice, minQuantity, maxQuantity, name, article);
+        if(!productFilterList.isEmpty()) {
+            model.addAttribute("productFilterList", productFilterList);
+        } else {
+            model.addAttribute("emptyList", List.of());
+        }
+        return "product-filter-page";
+
+    }
 }

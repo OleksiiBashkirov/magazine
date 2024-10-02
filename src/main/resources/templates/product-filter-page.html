@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product filter page</title>
+</head>
+<body>
+<div th:if="${productFilterList}">
+    <p>RESULT</p>
+    <div th:each="productF : ${productFilterList}">
+        <a th:href="@{/product/{id}(id=${productF.getId()})}"
+           th:text="${productF.getId() + productF.getName() + productF.getPrice() + productF.getArticle() + productF.getQuantity()}"
+        >
+        </a>
+    </div>
+</div>
+<div th:if="${emptyList}">
+    <p>NO RESULT</p>
+</div>
+
+<form th:method="GET" th:action="@{/product}">
+    <input type="submit" value="Back">
+</form>
+</body>
+</html>
