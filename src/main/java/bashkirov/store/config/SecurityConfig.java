@@ -33,7 +33,7 @@ public class SecurityConfig {
                 .formLogin(formLogin ->
                         formLogin
                                 .loginPage("/auth/login")
-                                .loginProcessingUrl("process_login")
+                                .loginProcessingUrl("/process_login")
                                 .defaultSuccessUrl("/store", true)
                                 .failureUrl("/auth/login?error")
                 );
