@@ -16,11 +16,27 @@
 <p th:text="${'QUANTITY=' + productGetById.getQuantity()}"></p>
 <p th:text="${'DESCRIPTION=' + productGetById.getDescription()}"></p>
 
+<div>
+    <form th:method="GET" th:action="@{/product/edit/{id}(id=${productGetById.getId()})}"
+          style="display: inline;">
+        <input type="submit" value="Edit">
+    </form>
+
+    <form th:method="DELETE" th:action="@{/product/{id}(id=${productGetById.getId()})}"
+          style="display: inline; margin-left: 10px;">
+        <input type="submit" value="Delete">
+    </form>
+</div>
+<br>
+
 <div th:if="${productStoreOwner}">
-    <p>Product present in the store=</p>
+    <p style="display: inline">Product present in the store=</p>
     <a th:href="@{/store/{id}(id=${productStoreOwner.getId()})}"
-       th:text="${productStoreOwner.getName() + ', address=' + productStoreOwner.getAddress()}"></a>
-    <form th:method="PUT" th:action="@{/product/release/{id}(id=${productGetById.getId()})}">
+       th:text="${productStoreOwner.getName() + ', address=' + productStoreOwner.getAddress()}"
+       style="display: inline;margin-left: 10px;"></a>
+    <form th:method="PUT"
+          th:action="@{/product/release/{id}(id=${productGetById.getId()})}"
+          style="display: inline;margin-left: 10px;">
         <input type="submit" value="Release">
     </form>
 </div>
@@ -42,23 +58,11 @@
     </form>
 </div>
 
-
-<form th:method="GET" th:action="@{/product/edit/{id}(id=${productGetById.getId()})}"
-      style="display: inline;">
-    <input type="submit" value="Edit">
-</form>
-
-<form th:method="DELETE" th:action="@{/product/{id}(id=${productGetById.getId()})}"
-      style="display: inline;">
-    <input type="submit" value="Delete">
-</form>
-
+<br>
 <form th:method="PUT" th:action="@{/product/{id}/discount (id=${productGetById.getId()})}">
     <label for="discountId">DISCOUNT PERCENTAGE:</label>
     <input type="number" name="discountPercentage" id="discountId" step="0.01" min="0" max="100" required>
     <input type="submit" value="Apply DISCOUNT">
 </form>
-
 </body>
-
 </html>

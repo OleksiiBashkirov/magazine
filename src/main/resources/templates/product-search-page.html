@@ -6,10 +6,10 @@
 </head>
 <body>
 <div th:if="${productSearchList}">
-    <p>SEARCH RESULT</p>
+    <p style="margin-bottom: 5px;">SEARCH RESULT:</p>
     <div th:each="productS : ${productSearchList}">
         <a th:href="@{/product/{id}(id=${productS.getId()})}"
-           th:text="${productS.getId() + ' ' + productS.getName() + ' ' + productS.getPrice() + ' ' + productS.getArticle()}"
+           th:text="${productS.getId() + '. Name= ' + productS.getName() + ', price= ' + productS.getPrice() + ', article= ' + productS.getArticle() + ', quantity= ' + productS.getQuantity()}"
         ></a>
     </div>
 </div>
@@ -17,6 +17,8 @@
 <div th:if="${emptySearchList}">
     <p>NO RESULT</p>
 </div>
+<br>
+<br>
 
 <form th:method="GET" th:action="@{/product}">
     <input type="submit" value="Back">

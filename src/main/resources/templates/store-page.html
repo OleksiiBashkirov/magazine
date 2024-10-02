@@ -16,17 +16,33 @@
 <p th:text="${'SPECIAL NUMBER=' + storeGetById.getSpecialNumber()}"></p>
 <p th:text="${'DESCRIPTION=' + storeGetById.getDescription()}"></p>
 
+<div>
+    <form th:method="GET"
+          th:action="@{/store/edit/{id}(id=${storeGetById.getId()})}"
+          style="display: inline">
+        <input type="submit" value="Edit">
+    </form>
+
+    <form th:method="DELETE"
+          th:action="@{/store/{id} (id=${storeGetById.getId()})}"
+          style="display: inline; margin-left: 10px;">
+        <input type="submit" value="Delete">
+    </form>
+</div>
+<br>
+
 <div th:if="${productList}">
-    <p>LIST OF PRODUCTS:</p>
+    <p style="margin-bottom: 5px;">LIST OF PRODUCTS:</p>
     <div th:each="product : ${productList}">
         <a th:href="@{/product/{id} (id=${product.getId()})}"
            th:text="${product.getId() + '. Name=' + product.getName() + ', price=' + product.getPrice() + ', article=' + product.getArticle() + ', quantity=' + product.getQuantity()}"
-        >
+           style="display: inline">
         </a>
         <!-- Кнопка для release продукту -->
         <form th:method="PUT"
-              th:action="@{/store/product/release/{productId}(productId=${product.getId()})}">
-            <input type="hidden" name = "storeId" th:value="${storeGetById.getId()}">
+              th:action="@{/store/product/release/{productId}(productId=${product.getId()})}"
+              style="display: inline; margin-left: 10px; ">
+            <input type="hidden" name="storeId" th:value="${storeGetById.getId()}">
             <input type="hidden" name="_method" value="PUT"/>
             <input type="submit" value="Release">
         </form>
@@ -41,8 +57,8 @@
 <div th:if="${availableProductList}">
     <p>ASSIGN PRODUCT TO THIS STORE:</p>
     <form th:method="POST" th:action="@{/store/product/assign}">
-        <input type="hidden" name = "storeId" th:value="${storeGetById.getId()}">
-        <label for="productSelectId">SELECT PRODUCT</label>
+        <input type="hidden" name="storeId" th:value="${storeGetById.getId()}">
+        <label for="productSelectId">SELECT PRODUCT: </label>
         <select id="productSelectId" name="productId">
             <option th:each="product : ${availableProductList}"
                     th:value="${product.getId()}"
@@ -54,15 +70,6 @@
     </form>
 </div>
 
-<form th:method="GET"
-      th:action="@{/store/edit/{id}(id=${storeGetById.getId()})}">
-    <input type="submit" value="Edit">
-</form>
-
-<form th:method="DELETE"
-      th:action="@{/store/{id} (id=${storeGetById.getId()})}">
-    <input type="submit" value="Delete">
-</form>
 </body>
 
 </html>

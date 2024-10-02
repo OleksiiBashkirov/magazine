@@ -6,10 +6,10 @@
 </head>
 <body>
 <div th:if="${productFilterList}">
-    <p>RESULT</p>
+    <p style="margin-bottom: 5px;">RESULT OF FILTER:</p>
     <div th:each="productF : ${productFilterList}">
         <a th:href="@{/product/{id}(id=${productF.getId()})}"
-           th:text="${productF.getId() + productF.getName() + productF.getPrice() + productF.getArticle() + productF.getQuantity()}"
+           th:text="${productF.getId() + '. Name= ' + productF.getName() + ', price= ' + productF.getPrice() + ', article= ' + productF.getArticle() + ', quantity= ' + productF.getQuantity()}"
         >
         </a>
     </div>
@@ -17,7 +17,8 @@
 <div th:if="${emptyList}">
     <p>NO RESULT</p>
 </div>
-
+<br>
+<br>
 <form th:method="GET" th:action="@{/product}">
     <input type="submit" value="Back">
 </form>
